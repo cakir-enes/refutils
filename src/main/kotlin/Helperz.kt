@@ -101,18 +101,22 @@ object Oracle {
 
                     sb.append(it.rawType.typeName)
                     sb.append("<")
+                    reffedClasses.add(it.rawType as Class<*>)
                     val genericRaw = StringBuilder()
                     val typeArg = it.actualTypeArguments[0]
+
                     if (typeArg is ParameterizedType) {
                         genericClassHandler(typeArg)
-//                        reffedClasses.add(typeArg)
-                        println()
+
                     } else {
+                        classHandler(typeArg as Class<*>)
+                        reffedClasses.add(typeArg as Class<*>)
                         reffedClasses.addAll(discover(typeArg as Class<*>, genericRaw))
                     }
                     sb.append(">")
                     val genSb = StringBuilder()
                     reffedClasses.addAll(discover(it.rawType as Class<*>, genSb))
+//                    sb.append("\n").append(genSb)
 
                 }
             }
@@ -120,14 +124,14 @@ object Oracle {
 
         clazz.declaredFields.forEach { field ->
 
-            sb.indent(fieldIndent).append("name: ", field.name, "\n")
+            sb.indent(fieldIndent).append("{name: ", field.name, "\n")
             sb.indent(fieldIndent).append("type: ")
 
             when (val type = field.genericType) {
                 is Class<*> -> classHandler(type)
                 is ParameterizedType -> genericClassHandler(type)
             }
-            sb.append("\n")
+            sb.append("},\n")
         }
         sb.append("]}")
         knowledge[clazz] = sb.toString()

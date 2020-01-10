@@ -4,7 +4,7 @@ import java.util.Map;
 public class Person {
     private String name;
     private long time;
-    private Map<String, Pet<Person>> friends;
+    private Map<String, Pet<List<Person>>> friends;
     private Pet<List<Person>> diffKind;
     private Person gurl;
     private Integer[] intz;

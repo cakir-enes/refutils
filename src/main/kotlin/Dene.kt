@@ -25,7 +25,9 @@ fun main() {
     typez(Person::class.java, sb)
 
     val (s, map) = Oracle.discover(Person::class.java)
+    println("CLAZZ_INFO")
     println(s)
+    println("REFFED")
     println(map)
 
 //    Topics.sub("ABC")
